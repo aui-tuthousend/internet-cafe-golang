@@ -31,19 +31,19 @@ func (list *doublyLinkedList) pushBack(namaK string, pw int) {
 	}
 	list.size++
 }
-func (list *doublyLinkedList) login(idc string) int {
+func (list *doublyLinkedList) login(idc string, pew int) int {
 	node := list.head
-	var tempidd int
+	// var tempidd int
 	var tempaidi string
 	var tempnama int
 	for node != nil {
-
 		if node.nama == idc {
-			fmt.Print("Masukkan Password: ")
-			fmt.Scanln(&tempidd)
-			if tempidd == node.pass {
+			// fmt.Print("\nMasukkan Password: ")
+			// fmt.Scanln(&tempidd)
+			if pew == node.pass {
 				var pp int
 				fmt.Print(
+					"\nHalo ", node.nama, "!",
 					"\nTindakan: ",
 					"\n[1]. Ubah Username",
 					"\n[2]. Ubah Password",
@@ -60,7 +60,9 @@ func (list *doublyLinkedList) login(idc string) int {
 					fmt.Scanln(&tempaidi)
 
 					node.nama = tempaidi
-					fmt.Print("\nUsername berhasil diubah! ")
+					fmt.Print("\nUsername berhasil diubah! \n")
+					list.login(tempaidi, pew)
+					break
 					// continue
 
 				case 2:
@@ -73,11 +75,13 @@ func (list *doublyLinkedList) login(idc string) int {
 
 					if ew == tempnama {
 						node.pass = tempnama
-						fmt.Print("\nPassword berhasil diubah! ")
-						// continue
+						fmt.Print("\nPassword berhasil diubah! \n")
 					} else {
 						fmt.Println("\nSalah bosku")
+						break
 					}
+					list.login(node.nama, node.pass)
+					break
 
 				case 3:
 					var afh string
@@ -99,20 +103,25 @@ func (list *doublyLinkedList) login(idc string) int {
 						}
 
 						fmt.Println("\nMember Berhasil dihapus")
-						node = nil
+						// node = nil
 						list.size--
+						// break
+						return 0
+
 					} else {
 						fmt.Println("\nOoo kocag")
-						break
+						list.login(node.nama, node.pass)
+						// break
 					}
 
 				case 4:
-					// break
 					// continue
 					return 1
+					// break
 				}
 
-				return 0
+				// continue
+				// return 0
 			} else {
 				fmt.Println("\nPassword Salah")
 				return 0
@@ -120,7 +129,7 @@ func (list *doublyLinkedList) login(idc string) int {
 		}
 		node = node.next
 	}
-	fmt.Println("bang udah banh salah bang")
+	fmt.Println("Username atau password salah")
 	return 0
 }
 
@@ -132,7 +141,7 @@ func (list *doublyLinkedList) PrintForward() {
 			nom,
 			"  ",
 			current.nama,
-			"     \n",)
+			"     \n")
 
 		current = current.next
 		nom++
@@ -189,7 +198,7 @@ func main() {
 	if opd == 5656 {
 
 		for {
-			var tempPass int
+			var tempPass, tempidd int
 			var lojin string
 
 			fmt.Print("\033[H\033[2J")
@@ -244,8 +253,10 @@ func main() {
 						fmt.Print("\n   [Login] ")
 						fmt.Print("\nMasukkan Nama Member: ")
 						fmt.Scanln(&lojin)
+						fmt.Print("Masukkan Password: ")
+						fmt.Scanln(&tempidd)
 						// list.login(lojin)
-						con := list.login(lojin)
+						con := list.login(lojin, tempidd)
 						if con == 1 {
 							continue
 						}
@@ -321,8 +332,10 @@ func main() {
 						fmt.Print("\n   [Login] ")
 						fmt.Print("\nMasukkan Nama Member: ")
 						fmt.Scanln(&lojin)
+						fmt.Print("\nMasukkan Password: ")
+						fmt.Scanln(&tempidd)
 						// list.login(lojin)
-						con := list2.login(lojin)
+						con := list2.login(lojin, tempidd)
 						if con == 1 {
 							continue
 						}
