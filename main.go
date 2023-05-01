@@ -7,6 +7,7 @@ import (
 
 type node struct {
 	pass int
+	// paket int
 	nama string
 	prev *node
 	next *node
@@ -30,7 +31,7 @@ func (list *doublyLinkedList) pushBack(namaK string, pw int) {
 	}
 	list.size++
 }
-func (list *doublyLinkedList) login(idc string) bool {
+func (list *doublyLinkedList) login(idc string) int {
 	node := list.head
 	var tempidd int
 	var tempaidi string
@@ -60,6 +61,7 @@ func (list *doublyLinkedList) login(idc string) bool {
 
 					node.nama = tempaidi
 					fmt.Print("\nUsername berhasil diubah! ")
+					// continue
 
 				case 2:
 					var ew int
@@ -72,6 +74,7 @@ func (list *doublyLinkedList) login(idc string) bool {
 					if ew == tempnama {
 						node.pass = tempnama
 						fmt.Print("\nPassword berhasil diubah! ")
+						// continue
 					} else {
 						fmt.Println("\nSalah bosku")
 					}
@@ -104,28 +107,35 @@ func (list *doublyLinkedList) login(idc string) bool {
 					}
 
 				case 4:
+					// break
 					// continue
-					return true
+					return 1
 				}
 
-				return true
+				return 0
 			} else {
 				fmt.Println("\nPassword Salah")
-				return true
+				return 0
 			}
 		}
 		node = node.next
 	}
 	fmt.Println("bang udah banh salah bang")
-	return false
+	return 0
 }
 
 func (list *doublyLinkedList) PrintForward() {
+	nom := 1
 	current := list.head
 	for current != nil {
-		fmt.Print(current.nama, "     \n")
+		fmt.Print(
+			nom,
+			"  ",
+			current.nama,
+			"     \n",)
 
 		current = current.next
+		nom++
 	}
 }
 
@@ -167,7 +177,7 @@ func (list *doublyLinkedList) clear() {
 
 func main() {
 	list := &doublyLinkedList{}
-	kasir := &doublyLinkedList{}
+	list2 := &doublyLinkedList{}
 	var lanjut string
 	var pilih, pilih1, pilih2, opd int
 
@@ -234,7 +244,11 @@ func main() {
 						fmt.Print("\n   [Login] ")
 						fmt.Print("\nMasukkan Nama Member: ")
 						fmt.Scanln(&lojin)
-						list.login(lojin)
+						// list.login(lojin)
+						con := list.login(lojin)
+						if con == 1 {
+							continue
+						}
 					}
 
 				case 3:
@@ -245,7 +259,7 @@ func main() {
 						fmt.Println("\n----------------------------------------------------")
 						fmt.Println("            Data Member Reguler PMA net")
 						fmt.Println("----------------------------------------------------")
-						fmt.Println("Nama     Sisa Billing\n")
+						fmt.Println("No Nama     Sisa Billing\n")
 						list.PrintForward()
 					}
 
@@ -273,10 +287,9 @@ func main() {
 				fmt.Print("Pilih Menu: ")
 				fmt.Scanln(&pilih2)
 				switch pilih2 {
-
 				case 1:
 					var teem string
-					fmt.Println("Username minimal 5 huruf")
+					fmt.Println("\nUsername minimal 5 huruf")
 					fmt.Print("\nMasukkan Nama: ")
 					fmt.Scanln(&teem)
 					delapan := len(teem)
@@ -287,7 +300,6 @@ func main() {
 						fmt.Println("Password minimal 4 nomor")
 						fmt.Print("Masukkan Password: ")
 						fmt.Scanln(&tempPass)
-
 						pasw := strconv.Itoa(tempPass)
 						ayaya := len(pasw)
 
@@ -296,44 +308,47 @@ func main() {
 							break
 
 						} else {
-							kasir.pushBack(teem, tempPass)
+							list2.pushBack(teem, tempPass)
 							fmt.Println("\nMember berhasil dibuat")
 						}
 					}
 
 				case 2:
-					if kasir.getSize() == 0 {
-						fmt.Println("\nBelum ada data")
-						break
-					}
-					fmt.Print("\n   [Login] ")
-					fmt.Print("\nMasukkan Nama Member: ")
-					fmt.Scanln(&lojin)
-					kasir.login(lojin)
-					break
-
-				case 3:
-					if list.getSize() == 0 {
+					if list2.getSize() == 0 {
 						fmt.Println("\nBelum ada data")
 						break
 					} else {
-						fmt.Println("\n---------------------------------------------------")
-						fmt.Println("            Data Member VIP PMA net")
-						fmt.Println("---------------------------------------------------")
-						fmt.Println("Nama     Sisa Billing\n")
-						kasir.PrintForward()
+						fmt.Print("\n   [Login] ")
+						fmt.Print("\nMasukkan Nama Member: ")
+						fmt.Scanln(&lojin)
+						// list.login(lojin)
+						con := list2.login(lojin)
+						if con == 1 {
+							continue
+						}
+					}
+
+				case 3:
+					if list2.getSize() == 0 {
+						fmt.Println("\nBelum ada data")
+						break
+					} else {
+						fmt.Println("\n----------------------------------------------------")
+						fmt.Println("            Data Member Reguler PMA net")
+						fmt.Println("----------------------------------------------------")
+						fmt.Println("No Nama     Sisa Billing\n")
+						list2.PrintForward()
 					}
 
 				case 4:
-					//view by id
 					var id string
-					if list.getSize() == 0 {
+					if list2.getSize() == 0 {
 						fmt.Println("\nBelum ada data")
 						break
 					} else {
-						fmt.Print("\nMasukkan Nama Member : ")
+						fmt.Print("Masukkan Nama Member: ")
 						fmt.Scanln(&id)
-						kasir.viewByID(id, "VIP")
+						list2.viewByID(id, "Reguler")
 					}
 
 				case 5:
@@ -353,7 +368,7 @@ func main() {
 		}
 
 		list.clear()
-		kasir.clear()
+		list2.clear()
 
 	} else {
 		fmt.Print("\nPW salah wlee")
