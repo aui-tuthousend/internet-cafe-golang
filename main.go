@@ -221,7 +221,7 @@ func main() {
 
 				case 1:
 					var teem string
-					fmt.Println("\nUsername minimal 5 huruf")
+// 					fmt.Println("\nUsername minimal 5 huruf")
 					fmt.Print("\nMasukkan Nama: ")
 					fmt.Scanln(&teem)
 					delapan := len(teem)
@@ -300,7 +300,7 @@ func main() {
 				switch pilih2 {
 				case 1:
 					var teem string
-					fmt.Println("\nUsername minimal 5 huruf")
+// 					fmt.Println("\nUsername minimal 5 huruf")
 					fmt.Print("\nMasukkan Nama: ")
 					fmt.Scanln(&teem)
 					delapan := len(teem)
